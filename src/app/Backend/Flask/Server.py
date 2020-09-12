@@ -360,8 +360,8 @@ def upload_file():
              ]
       }
         print(results)
-        return 'end of function'
-        # return jsonify([results])
+        # return 'end of function'
+        return jsonify([results])
         #return ('returning string in output flask')
         
         #Predict Support Vector Machine

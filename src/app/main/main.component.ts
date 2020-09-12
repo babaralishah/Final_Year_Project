@@ -12,9 +12,10 @@ export class MainComponent implements OnInit {
   // [x: string]: any;
   fileToUpload: File = null;
   data: any[];
+  results: Object;
   constructor(public restservice: RestService) { }
   headers1 = ['Algorithm', 'Efficiency'];
-  results: Results;
+  // results: Results;
   flag = false;
   stringifiedData: any;
   parsedJson: any;
@@ -36,7 +37,7 @@ export class MainComponent implements OnInit {
 
   // @ViewChild('fileInput') fileInput;
   ngOnInit() {
-    this.myFunction();
+    // this.myFunction();
   }
   handleFileInput(files: FileList) {
     this.fileToUpload = files.item(0);
@@ -66,9 +67,9 @@ export class MainComponent implements OnInit {
       // data is the response that we would receive in return to the function call
       console.log('File to Upload:\t', this.fileToUpload);
       console.log('Subscribed data of upload function: ', data);
-      // this.results = data;
+      this.results = data;
       // this.results = data[0]['this.data'];
-      // console.log(this.results);
+      console.log(this.results);
       // this.myFunction();
     });
   }
