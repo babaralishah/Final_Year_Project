@@ -1,0 +1,44 @@
+div {
+    font-family: 'Segoe UI', SegoeUI, 'Segoe WP', Tahoma, Arial, sans-serif;
+    color: white;
+    background-color: #3c3c41;
+    font-size: 23px;
+}
+
+.btn {
+    font-family: 'Segoe UI', SegoeUI, 'Segoe WP', Tahoma, Arial, sans-serif;
+    border: none;
+    color: green;
+    padding: 5px 1px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+#results {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#results td,
+#results th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#results tr:nth-child(even) {
+    background-color: #c7888f;
+}
+
+#results tr:hover {
+    background-color: #072e38;
+}
+
+#results th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #21b29b;
+    color: white;
+}
