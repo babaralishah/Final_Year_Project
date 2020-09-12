@@ -53,7 +53,6 @@ import { HttpClientModule } from '@angular/common/http';
           <br />
           Algorithm Visualization: {{ val }}
             <br />
-            <br />
 
           <br />
         </div>
