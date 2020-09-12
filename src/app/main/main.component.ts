@@ -4,67 +4,14 @@ import { RestService } from '../Services/rest.service';
 import { HttpClientModule } from '@angular/common/http';
 @Component({
   selector: 'app-main',
-  template: `
-  <body>
-      <div style="text-align:center">
-        <div>
-          <br />
-          <input #fileInput name="file" type="file"  (change)="handleFileInput($event.target.files)" >
-<button mat-raised-button class="standard-button" (click)="uploadFile()">Upload file</button>
-          <br />
-  
-          <div>
-            <br />
-            <br />
-            Select an Algorithm :
-            <select>
-              <option *ngFor="let i of algos">{{ i }}</option>
-            </select>
-          </div>
-          <div>
-          <br />
-          <input name="btn" type="submit" >
-<button mat-raised-button class="standard-button" (click)="myFunction()">predict it</button>
-          <br />
-</div>
-          <br />
-
-          <table id="results">
-    <tr>
-        <th *ngFor="let column of headers1">
-            {{column}}
-        </th>
-    </tr>
-
-    <tr *ngFor="let row of results">
-        <td *ngFor="let col of headers1">
-            {{row[col]}}
-        </td>
-    </tr>
-    <div class="form-group">
-    <label for="file">Choose File</label>
-    <input type="file"
-           id="file"
-           (change)="handleFileInput1($event.target.files)">
-</div>
-</table>
-          <br />
-          <!-- Algorithms Accuracy Result : <input [(ngModel)]="val" /> <br /><br /> -->
-          <br />
-          Algorithm Visualization: {{ val }}
-            <br />
-
-          <br />
-        </div>
-      </div>
-    </body>
-  `,
+  templateUrl: './main.component.html',
   styleUrls: ['./main.component.css']
   // templateUrl: './Main.component.html',
 })
 export class MainComponent implements OnInit {
-  [x: string]: any;
+  // [x: string]: any;
   fileToUpload: File = null;
+  data: any[];
   constructor(public restservice: RestService) { }
   headers1 = ['Algorithm', 'Efficiency'];
   results: Results;
@@ -89,7 +36,7 @@ export class MainComponent implements OnInit {
 
   // @ViewChild('fileInput') fileInput;
   ngOnInit() {
-
+    this.myFunction();
   }
   handleFileInput(files: FileList) {
     this.fileToUpload = files.item(0);
@@ -114,15 +61,17 @@ export class MainComponent implements OnInit {
 
   uploadFile() {
 
+    console.log('Upload file function here')
     this.restservice.parseTable(this.fileToUpload).subscribe(data => {
       // data is the response that we would receive in return to the function call
-      console.log('I am \'uploadFile function in main.ts, \' \"Data i am getting from response of post file request:\"' + data);
+      console.log('File to Upload:\t', this.fileToUpload);
+      console.log('Subscribed data of upload function: ', data);
       // this.results = data;
-      this.results = data[0]['this.data'];
+      // this.results = data[0]['this.data'];
+      // console.log(this.results);
+      // this.myFunction();
     });
   }
-  // setInterval(() => {
-  // }, 1400);
   myFunction() {
     this.restservice.readResults()
       .subscribe
@@ -130,11 +79,19 @@ export class MainComponent implements OnInit {
         // tslint:disable-next-line:no-string-literal
         // this.results = data[0]['data'];
         console.log('Server Response: ', data);
+        // this.results = data;
+        this.results = data[0]['data'];
+        this.data = data;
+        console.log('Data table: ', this.data);
+        console.log('Result table: ', this.results);
       },
         (error) => {
           console.log('No Data Found of Results' + error);
         }
       );
+    // setInterval(() => {
+    // }, 1400);
+
   }
   //   uploadFile1(event) {
   //     console.log('Inside File uploadFile1');

@@ -1,11 +1,11 @@
 export class Results {
-    Algorithm: string;
-    Efficiency: string;
+    name: string;
+    output: string;
 
 
-    constructor(Algorithm, Efficiency) {
-        this.Algorithm = Algorithm;
-        this.Efficiency = Efficiency;
+    constructor(name, output) {
+        this.name = name;
+        this.output = output;
     }
 
 }

@@ -15,7 +15,6 @@ from sklearn.feature_selection import chi2
 
 #import various ML algorithms to be used from the library
 from sklearn.preprocessing import MinMaxScaler
-
 #Naive Bayes Classifier
 from sklearn import naive_bayes
 
@@ -337,7 +336,8 @@ def upload_file():
         #abc = 'hello'
 
         results =  {
-        "data":[{
+        "data":[
+          {
           "Algorithm":"Linear Regression",
           "Efficiency":linear
         },  {
@@ -359,8 +359,9 @@ def upload_file():
 
              ]
       }
-
-        return jsonify([results])
+        print(results)
+        return 'end of function'
+        # return jsonify([results])
         #return ('returning string in output flask')
         
         #Predict Support Vector Machine

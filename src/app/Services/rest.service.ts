@@ -27,12 +27,14 @@ export class RestService {
   //   }
   readResults(): Observable<Results[]> {
     console.log('I am readResult function, having backend response: ');
-    return this.http.get<Results[]>(this.backendAddress1, { responseType: 'json' });
+    return this.http.get<any>(this.backendAddress, { responseType: 'json' });
   }
   parseTable(fileToUpload: File) {
     const formData: FormData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
-    console.log('I am the ParseTable function in service.ts, \'File and its name: \' ' + fileToUpload + fileToUpload.name);
+    console.log('Service parseTable function');
+    console.log('File: ', fileToUpload);
+    console.log('File Name: ', fileToUpload.name); // and File and its name: \' ' + fileToUpload + fileToUpload.name);
     return this.http.post(this.backendAddress, formData); // ,{  responseType: 'arraybuffer' | 'blob' | 'json' | 'text' });
   }
 

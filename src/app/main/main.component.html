@@ -1,1 +1,54 @@
-<p>main works!</p>
+<div style="text-align:center">
+    <div>
+        <br />
+        <input #fileInput name="file" type="file" (change)="handleFileInput($event.target.files)">
+        <button mat-raised-button class="btn btn-primary" class="standard-button" (click)="uploadFile()">Upload
+            file</button>
+        <br />
+        <div>
+            <br />
+            <button class="btn btn-primary" mat-raised-button class="standard-button" (click)="myFunction()">predict
+                it</button>
+            <br />
+        </div>
+        <br />
+
+        <table id="results">
+            <tr>
+                <th *ngFor="let column of headers1">
+                    {{column}}
+                </th>
+            </tr>
+
+            <tr *ngFor="let row of results">
+                <td *ngFor="let col of headers1">
+                    {{row[col]}}
+                </td>
+            </tr>
+            <!-- <div class="form-group">
+  <label for="file">Choose File</label>
+  <input type="file"
+         id="file"
+         (change)="handleFileInput1($event.target.files)">
+</div> -->
+        </table>
+        <div>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Firstname</th>
+                        <th>Lastname</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <!-- <td>{{data.name}}</td>
+                        <td>{{data.output}}</td> -->
+                    <!-- <td>{{results.output}}</td>  -->
+                    <td>output</td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+</div>
