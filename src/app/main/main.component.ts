@@ -11,8 +11,9 @@ import { HttpClientModule } from '@angular/common/http';
 export class MainComponent implements OnInit {
   // [x: string]: any;
   fileToUpload: File = null;
-  data: any[];
+  // data: any[];
   results: Object;
+  data: Object = {};
   constructor(public restservice: RestService) { }
   headers1 = ['Algorithm', 'Efficiency'];
   // results: Results;
@@ -67,9 +68,12 @@ export class MainComponent implements OnInit {
       // data is the response that we would receive in return to the function call
       console.log('File to Upload:\t', this.fileToUpload);
       console.log('Subscribed data of upload function: ', data);
-      this.results = data;
+      // this.results = data; 
+      this.results = data[0].data;
+      this.data = data;
       // this.results = data[0]['this.data'];
-      console.log(this.results);
+      console.log('Data: ', this.data);
+      console.log('Results: ', this.results);
       // this.myFunction();
     });
   }

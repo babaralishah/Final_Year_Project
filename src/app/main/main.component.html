@@ -25,27 +25,19 @@
                     {{row[col]}}
                 </td>
             </tr>
-            <!-- <div class="form-group">
-  <label for="file">Choose File</label>
-  <input type="file"
-         id="file"
-         (change)="handleFileInput1($event.target.files)">
-</div> -->
         </table>
+
         <div>
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Firstname</th>
-                        <th>Lastname</th>
-                        <th>Email</th>
+                        <th>Algorithm</th>
+                        <th>Efficiency</th>
                     </tr>
                 </thead>
-                <tr>
-                    <!-- <td>{{results.Algorithm}}</td>
-                        <td>{{data.output}}</td> 
-                     <td>{{results.output}}</td>  -->
-                    <td>output</td>
+                <tr *ngFor="let item of results">
+                    <td>{{item.Algorithm}}</td>
+                    <td>{{item.Efficiency}}</td>
                 </tr>
 
             </table>
