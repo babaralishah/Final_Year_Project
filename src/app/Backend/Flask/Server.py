@@ -91,7 +91,7 @@ def upload_file():
         #data_frame.fillna(data_frame.mean())
 
         from sklearn.preprocessing import OneHotEncoder, LabelEncoder
-        ohe = OneHotEncoder()
+        # ohe = OneHotEncoder()
         le = LabelEncoder()
 
         #Converting columns from object dtype to int if there is any in the dataframe
@@ -264,7 +264,7 @@ def upload_file():
         #Model Validation:
 
         #Predict Linear Regression
-        y_pred = linear.predict(X_test)
+        # y_pred = linear.predict(X_test)
 
         #Accuracy of Logistic Regression
         print("\nLinear Regression Accuracy Score:\t",linear.score(X_test, y_test)*100,"\t\t\t\t",linear.score(X_train, y_train)*100)
@@ -313,7 +313,7 @@ def upload_file():
 
         #Accuracy of Rabdom Forest
         print("\nRandom Forest Accuracy Score:\t\t",RF_clf.score(X_test, y_test)*100,"\t\t\t\t",RF_clf.score(X_train, y_train)*100)
-        rf = RF_clf.score(X_test, y_test)*100
+        # rf = RF_clf.score(X_test, y_test)*100
         # Stops the watch
         end = time.time()
 
@@ -377,34 +377,13 @@ def upload_file():
 
 # s = svc_clf.score(X_test, y_test)*100
 
-@app.route("/weatherReport/", methods = ['GET','POST'])
-def WeatherReport():
-
-        abc = 'weather report'
-        s = 'testing the weather function'
-        weather =  {
-        "data":[{
-            "day":s,
-            "temperature":"19",
-            "windspeed":"21",
-            "event":"Rainy"
-        },  {
-            "day":"7/6/2019",
-            "temperature":"28",
-            "windspeed":"14",
-            "event":"Sunny"
-        }
-        ]
-    }
-        return jsonify([weather])
-
 
 @app.route('/output1/', methods = ['POST','GET'])
 @cross_origin(allow_headers=['http://localhost:4200'])
 def upload_file1():
         #abc =''
-        d = index()
-        t = Template('$when, $who $action $what.')
+        # d = index()
+        # t = Template('$when, $who $action $what.')
         #s= t.substitute(when=abc, who='Rajesh', action='drinks', what ='Coffee')
 
         abc = 'hey there'
