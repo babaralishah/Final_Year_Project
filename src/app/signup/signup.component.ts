@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-
+import { AuthenticationService } from "../authentication.service";
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -10,9 +10,9 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 export class SignupComponent implements OnInit {
   submitted = false;
   registerForm: FormGroup;
-  mobileView: boolean;
 
   constructor(public formBuilder: FormBuilder,
+    public authService: AuthenticationService,
     public router: Router) { }
 
   ngOnInit(): void {
@@ -33,11 +33,23 @@ export class SignupComponent implements OnInit {
       console.log('Erroneous')
       return;
     }
+    this.authService.register(this.registerForm.value).subscribe((data) => {
+      console.log(data);
+      // this.registerresponse = data;
+      const email = this.registerForm.value.email;
+      const msg = data.msg;
+      const status = data.status;
+      // console.log('Status: ' + status);
+      if (status) {
+        this.registerForm.reset();
 
-    alert('User Successfully Registered!! :-)\n')
-
-    this.router.navigate(['/Home']);
-    console.log(this.registerForm.value);
+        alert(msg);
+        this.router.navigate(['Home']);
+      }
+      else {
+        alert(msg);
+      }
+    })
   }
   // convenience getter for easy access to form fields
   get f() { return this.registerForm.controls; }

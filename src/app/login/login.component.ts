@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 // import { ToastrService } from "ngx-toastr";
+import { AuthenticationService } from "../authentication.service";
 
 @Component({
   selector: 'app-login',
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit {
 
   constructor(public formBuilder: FormBuilder, // Creating an instance of Formbuilder
     public router: Router,
+    public authService: AuthenticationService, // Instance of Authentication services created in front end
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -32,15 +34,31 @@ export class LoginComponent implements OnInit {
   loginUser() {
     this.submitted = true;
     if (this.loginForm.invalid) {
-      // alert('Fields email, password Required!');
- 
+      
       return;
     }
-    
-    alert('Logged In! Successfully...');
     console.log('user login data: ', this.loginForm.value);
-    this.router.navigate(['/Home']);
- 
+    this.authService.login(this.loginForm.value).subscribe(data => {
+
+      console.log("Subscribed Data: ", data);
+      const success = data.success;
+      const status = data.status;
+      // const msg: string = data.msg;
+      console.log("Status: " + status);
+      console.log("Success: " + success);
+      const email = this.loginForm.value.email;
+      // const email = this.email;
+      if (success) {
+
+        console.log(this.email);
+        console.log(email);
+        alert('SUCCESS!! :-)')
+        this.router.navigate(['profile', email]);
+      } else {
+        alert('Invalid email or password!');
+        // this.router.navigate(['profile', email]);
+      }
+    });
   }
 
   // getting input labels values from user end (login.html)
