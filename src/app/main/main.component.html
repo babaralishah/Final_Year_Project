@@ -1,46 +1,42 @@
-<div style="text-align:center">
-    <div>
-        <br />
-        <input #fileInput name="file" type="file" (change)="handleFileInput($event.target.files)">
-        <button mat-raised-button class="btn btn-primary" class="standard-button" (click)="uploadFile()">Upload
-            file</button>
-        <br />
-        <div>
-            <br />
-            <button class="btn btn-primary" mat-raised-button class="standard-button" (click)="myFunction()">predict
-                it</button>
-            <br />
+<div class="row">
+    <br><br>
+    <h1 style="text-align:center;"><b>Lets start your prediction</b></h1>
+    <div style="text-align:center">
+        <div class="row">
+            <br><br> <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input #fileInput name="file" type="file" (change)="handleFileInput($event.target.files)">
         </div>
-        <br />
-
-        <table id="results" class="table table-hover table-dark">
-            <tr>
-                <th *ngFor="let column of headers1">
-                    {{column}}
-                </th>
-            </tr>
-
-            <tr *ngFor="let row of results">
-                <td *ngFor="let col of headers1">
-                    {{row[col]}}
-                </td>
-            </tr>
-        </table>
-
-        <!-- <div>
-            <table class="table table-hover">
+        <br><br><br>
+        <div class="row">
+            <button class="btn btn-primary rounded-pill" (click)="uploadFile()">predict
+                it</button>
+        </div>
+        <br><br><br><br><br>
+        <div class="row">
+            <table id="results" class="table table-striped ">
                 <thead>
                     <tr>
-                        <th>Algorithm</th>
-                        <th>Efficiency</th>
+                        <th *ngFor="let column of headers1">
+                            {{column}}
+                        </th>
+                    </tr>
+
+                    <tr *ngFor="let row of results">
+                        <td *ngFor="let col of headers1">
+                            {{row[col]}}
+                        </td>
                     </tr>
                 </thead>
-                <tr *ngFor="let item of results">
-                    <td>{{item.Algorithm}}</td>
-                    <td>{{item.Efficiency}}</td>
-                </tr>
 
             </table>
-        </div> -->
+        </div>
+
+        <!-- Visualization -->
+        <div class="row">
+            <button class="btn btn-primary  pull-right" routerLink="/Visualization">Visualize it</button>
+
+        </div>
+        <div>
+        </div>
     </div>
 </div>

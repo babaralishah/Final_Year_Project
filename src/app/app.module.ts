@@ -21,6 +21,8 @@ import { MainComponent } from './main/main.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { HomeComponent } from './home/home.component';
+import { VisualizationComponent } from './visualization/visualization.component';
+import { ReportsComponent } from './reports/reports.component';
 
 
 
@@ -30,7 +32,9 @@ import { HomeComponent } from './home/home.component';
     MainComponent,
     LoginComponent,
     SignupComponent,
-    HomeComponent
+    HomeComponent,
+    VisualizationComponent,
+    ReportsComponent
   ],
   imports: [
     ReactiveFormsModule,
