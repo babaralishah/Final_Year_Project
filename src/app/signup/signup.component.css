@@ -1,3 +1,10 @@
+.input-group>.custom-select:not(:first-child),
+.input-group>.form-control:not(:first-child) {
+    border-top-left-radius: 0;
+    font-size: 18px;
+    border-bottom-left-radius: 0;
+}
+
 form {
     border: 3px solid #f1f1f1;
 }
@@ -13,6 +20,7 @@ input[type=password] {
 }
 
 button {
+    font-size: 18px;
     background-color: #4CAF50;
     color: white;
     padding: 14px 20px;
@@ -38,7 +46,7 @@ button:hover {
 }
 
 img.avatar {
-    width: 40%;
+    width: 30%;
     border-radius: 50%;
 }
 
