@@ -1,3 +1,4 @@
+import { ChartsModule } from 'ng2-charts';
 import { RestService } from './Services/rest.service';
 import { Routes, RouterModule } from '@angular/router';
 // import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
@@ -54,6 +55,7 @@ import { ReportsComponent } from './reports/reports.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    ChartsModule
     // MaterialModule
   ],
   providers: [RestService],

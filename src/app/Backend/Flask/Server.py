@@ -31,7 +31,8 @@ from flask import jsonify
 import warnings
 from string import Template
 warnings.filterwarnings("ignore", category=FutureWarning)
-
+import numpy as np 
+import matplotlib.pyplot as plt 
 
 # import various ML algorithms to be used from the library
 # Naive Bayes Classifier
@@ -225,8 +226,6 @@ def upload_file():
         # Calculates the consumed time
         print("\nExecution time of Knn training: ", end - start)
 
-        start = time.time()
-
         # fit the model with data
         svc_clf.fit(X_train, y_train.values.ravel())
         end = time.time()
@@ -253,6 +252,18 @@ def upload_file():
 
         # Calculates the consumed time
         print("\nExecution time of Random Forest training: ", end - start)
+        
+        import numpy as np 
+        import matplotlib.pyplot as plt 
+
+        x = np.arange(0,10) 
+        y = x ^ 2 
+        #Labeling the Axes and Title
+        plt.title("Graph Drawing") 
+        plt.xlabel("Time") 
+        plt.ylabel("Distance") 
+        #Simple Plot
+        plt.plot(x,y)
 
         print("\n\nModel \t\t\t\t\t Test Score\t\t\t\t\tTrain Score")
 
