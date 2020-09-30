@@ -1,7 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { Results } from '../Results';
+
+import { AngularFireList, AngularFireDatabase } from '@angular/fire/database';
+import { Component, Inject, OnInit } from '@angular/core';
+// import { Results } from '../Results';
 import { RestService } from '../Services/rest.service';
-import { HttpClientModule } from '@angular/common/http';
+import { FileholderService } from '../Services/fileholder.service';
+import { UploadfirebaseService } from '../Services/uploadfirebase.service';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+// import { HttpClientModule } from '@angular/common/http';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -18,7 +24,12 @@ export class MainComponent implements OnInit {
   // data: any[];
   results: Object;
   // data: Object = {};
-  constructor(public restservice: RestService) { }
+  constructor(
+    private router: Router,
+    public restservice: RestService,
+    private UploadfirebaseService: UploadfirebaseService,
+    private FileholderService: FileholderService,
+    @Inject(AngularFireDatabase) private firebase: AngularFireDatabase) { }
   headers1 = ['Algorithm', 'Efficiency'];
   // results: Results;
   flag = false;
@@ -28,15 +39,6 @@ export class MainComponent implements OnInit {
   firstName: string;
   newImage: any;
   FormValue: any;
-  // algos = [
-  //   'Linear Regression',
-  //   'KNN',
-  //   'Naive Bayes',
-  //   'SVM',
-  //   'Decision Tree',
-  //   'Logistic Regression',
-  //   'Random Forest'
-  // ];
   receivedFile: File; //  = null;
   todaydate: Date;
 
@@ -49,25 +51,24 @@ export class MainComponent implements OnInit {
     console.log('I am \'handleFileInput Function \': \"File dragged but not uploaded yet\"');
   }
 
-  handleFileInput1(files: FileList) {
-    console.log('handleFileInput1')
-    this.fileToUpload = files.item(0);
-    this.uploadFileToActivity();
-  }
-  uploadFileToActivity() {
-    console.log('uploadFileToActivity')
-    this.restservice.postFile(this.fileToUpload).subscribe(data => {
-      // do something, if upload success
+  async uploadFile() {
 
-      console.log('uploadFileToActivity 02')
-    }, error => {
-      console.log(error);
-    });
-  }
+    //Calling service for firebase
+    
+    // const obs = await this.UploadfirebaseService.uploadProfileImg(
+    //   {
+    //     file: this.fileToUpload
+    //   }
+    // );
+    // obs.subscribe(
+    //   url => {
+    //     console.log(url);
+    //     localStorage.setItem('fileUrl', JSON.stringify(url));
+    //   }
+    // );
 
-  uploadFile() {
-
-    console.log('Upload file function here')
+    // Calling the service to pass the data file between other components such as visualization component 
+    this.FileholderService.setfile(this.fileToUpload);
     this.restservice.parseTable(this.fileToUpload).subscribe(data => {
       // data is the response that we would receive in return to the function call
       console.log('File to Upload:\t', this.fileToUpload);
@@ -78,30 +79,34 @@ export class MainComponent implements OnInit {
       // this.results = data[0]['this.data'];
       console.log('Data: ', this.data);
       console.log('Results: ', this.results);
+
+      // this.router.navigateByUrl('/Visualization');
+
       // this.myFunction();
     });
   }
-  myFunction() {
-    this.restservice.readResults()
-      .subscribe
-      (data => {
-        // tslint:disable-next-line:no-string-literal
-        // this.results = data[0]['data'];
-        console.log('Server Response: ', data);
-        // this.results = data;
-        // this.results = data[0]['data'];
-        // this.data = data;
-        console.log('Data table: ', this.data);
-        console.log('Result table: ', this.results);
-      },
-        (error) => {
-          console.log('No Data Found of Results' + error);
-        }
-      );
-    // setInterval(() => {
-    // }, 1400);
+}
+  // myFunction() {
+  //   this.restservice.readResults()
+  //     .subscribe
+  //     (data => {
+  //       // tslint:disable-next-line:no-string-literal
+  //       // this.results = data[0]['data'];
+  //       console.log('Server Response: ', data);
+  //       // this.results = data;
+  //       // this.results = data[0]['data'];
+  //       // this.data = data;
+  //       console.log('Data table: ', this.data);
+  //       console.log('Result table: ', this.results);
+  //     },
+  //       (error) => {
+  //         console.log('No Data Found of Results' + error);
+  //       }
+  //     );
+  //   // setInterval(() => {
+  //   // }, 1400);
 
-  }
+  // }
   //   uploadFile1(event) {
   //     console.log('Inside File uploadFile1');
   //     const fileEvnet = event.target.files[0];
@@ -119,5 +124,20 @@ export class MainComponent implements OnInit {
   //       reader.readAsDataURL(file);
   //   }
   // }
-}
 
+
+  // handleFileInput1(files: FileList) {
+  //   console.log('handleFileInput1')
+  //   this.fileToUpload = files.item(0);
+  //   this.uploadFileToActivity();
+  // }
+  // uploadFileToActivity() {
+  //   console.log('uploadFileToActivity')
+  //   this.restservice.postFile(this.fileToUpload).subscribe(data => {
+  //     // do something, if upload success
+
+  //     console.log('uploadFileToActivity 02')
+  //   }, error => {
+  //     console.log(error);
+  //   });
+  // }

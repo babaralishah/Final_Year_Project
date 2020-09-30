@@ -1,5 +1,7 @@
 # Import Libraries :
 
+from flask import Flask, request, jsonify
+import os
 from flask import Flask, jsonify, render_template
 from flask import make_response, url_for, Blueprint
 from sklearn.naive_bayes import GaussianNB, MultinomialNB
@@ -31,8 +33,6 @@ from flask import jsonify
 import warnings
 from string import Template
 warnings.filterwarnings("ignore", category=FutureWarning)
-import numpy as np 
-import matplotlib.pyplot as plt 
 
 # import various ML algorithms to be used from the library
 # Naive Bayes Classifier
@@ -53,18 +53,51 @@ import matplotlib.pyplot as plt
 
 # RFC
 # from flask_restful import Resource, Api;
+# Required Imports
+# from firebase_admin import credentials, firestore, initialize_app
+
 app = Flask(__name__)
 
-abc = ''
+# firebase = firebase.FirebaseApplication('https://testwhatsapp-pxqrtl.firebaseio.com/', None)
 
 # cors = CORS(app, resources={r"/api/http://localhost:4200": {"origins": "http://localhost:4200"}})# api = Api(app)
 CORS(app, supports_credentials=True)
 app.register_blueprint(test, url_prefix="/")
 
+# Defining the global variables
+X = 0
+y = 0
+data_frame = 0
+
 
 @app.route('/')
 def index():
     return 'abcdef'
+
+# ##########################################################################################################################
+
+
+@app.route('/output1/', methods=['POST', 'GET'])
+@cross_origin(allow_headers=['http://localhost:4200'])
+def upload_file1():
+    if request.method == 'POST':
+        file = request.files['file']
+        file.save(secure_filename(file.filename))
+        print('File received at rest service: ' + file.filename)
+        # Data Preprocessing:
+        print('Calling the uplaod file function in the same file')
+        global data_frame
+        data_frame = pad.read_csv(file.filename)
+        print(data_frame)
+        print('\n\nX\n\n')
+        print(X)
+        print(y)
+        print('below we have the dataframe\n\n')
+        # return 'string'
+        df = data_frame.to_json()
+        return jsonify([df])
+
+# #################################################################################################################################
 
 
 @app.route('/output/', methods=['POST', 'GET'])
@@ -76,8 +109,10 @@ def upload_file():
         file.save(secure_filename(file.filename))
         print('File received at rest service: ' + file.filename)
         # Data Preprocessing:
-
+        print('Calling the uplaod file function in the same file')
+        # upload_file1(file)
         # Reading Data file (csv) from web cache
+        global data_frame
         data_frame = pad.read_csv(file.filename)
 
         # Removing all columns with only one value, or have more than 50% missing values to work faster
@@ -103,9 +138,11 @@ def upload_file():
             data_frame[x] = data_frame[x].astype(int)
 
         # All rows and columns (Attributes/Features) except last column
+        global X
         X = data_frame.iloc[:, :-1]
 
         # Only Last row and column (Label)
+        global y
         y = data_frame.iloc[:, [-1]]
 
         # Train-test split
@@ -252,18 +289,18 @@ def upload_file():
 
         # Calculates the consumed time
         print("\nExecution time of Random Forest training: ", end - start)
-        
-        import numpy as np 
-        import matplotlib.pyplot as plt 
 
-        x = np.arange(0,10) 
-        y = x ^ 2 
-        #Labeling the Axes and Title
-        plt.title("Graph Drawing") 
-        plt.xlabel("Time") 
-        plt.ylabel("Distance") 
-        #Simple Plot
-        plt.plot(x,y)
+        import numpy as np
+        import matplotlib.pyplot as plt
+
+        x = np.arange(0, 10)
+        y = x ^ 2
+        # Labeling the Axes and Title
+        plt.title("Graph Drawing")
+        plt.xlabel("Time")
+        plt.ylabel("Distance")
+        # Simple Plot
+        plt.plot(x, y)
 
         print("\n\nModel \t\t\t\t\t Test Score\t\t\t\t\tTrain Score")
 
@@ -392,27 +429,27 @@ def upload_file():
 # s = svc_clf.score(X_test, y_test)*100
 
 
-@app.route('/output1/', methods=['POST', 'GET'])
-@cross_origin(allow_headers=['http://localhost:4200'])
-def upload_file1():
-    #abc =''
-    # d = index()
-    # t = Template('$when, $who $action $what.')
-    #s= t.substitute(when=abc, who='Rajesh', action='drinks', what ='Coffee')
+# @app.route('/output1/', methods=['POST', 'GET'])
+# @cross_origin(allow_headers=['http://localhost:4200'])
+# def upload_file1():
+#     #abc =''
+#     # d = index()
+#     # t = Template('$when, $who $action $what.')
+#     #s= t.substitute(when=abc, who='Rajesh', action='drinks', what ='Coffee')
+#     # print(data_frame)
+#     abc = 'hey there'
+#     results = {
+#         "data": [{
+#             "name": abc,
+#             "output": "19"
+#         },  {
+#             "name": "Decision tree",
+#             "output": "28"
+#         }
+#         ]
+#     }
 
-    abc = 'hey there'
-    results = {
-        "data": [{
-            "name": abc,
-            "output": "19"
-        },  {
-            "name": "Decision tree",
-            "output": "28"
-        }
-        ]
-    }
-
-    return jsonify([results])
+#     return jsonify([results])
 
 
 if __name__ == '__main__':
