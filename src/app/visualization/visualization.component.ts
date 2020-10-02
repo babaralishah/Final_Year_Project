@@ -25,12 +25,12 @@ export class VisualizationComponent implements OnInit {
   public doughnutChartData = [120, 150, 180, 90, 120, 150, 180, 90];
   public doughnutChartType = 'doughnut';
 
-  public barChartLabels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+  public barChartLabels = ['Male', 'Female'];
   public barChartType = 'bar';
   public barChartLegend = true;
   public barChartData = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
+    { data: [1, 3, 4, 5, 12, 14, 17, 20], label: 'Sex' },
+    { data: [1, 3, 4, 5, 12, 14, 17, 18], label: 'Series B' }
   ];
 
   public pieChartLabels = ['Sales Q1', 'Sales Q2', 'Sales Q3', 'Sales Q4'];
@@ -43,6 +43,8 @@ export class VisualizationComponent implements OnInit {
     { data: [90, 150, 200, 45], label: '2018' }
   ];
   public radarChartType = 'radar';
+  lastColumn: Object;
+  data: Object;
 
   constructor(
     private FileholderService: FileholderService,
@@ -50,47 +52,54 @@ export class VisualizationComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // this.addData('bar', 'demale', [1,2,3,4,5,6,7,8,9,11,22,33,44,55,66,77,88,99]);
-
-    // socket.on('data1', (res) => {
-    //   this.updateChartData(this.chart, res, 0);
-    //   this.updateChartData(this.doughnut, res.slice(0, 5), 0);
-    // })
-
-    // socket.on('data2', (res) => {
-    //   this.updateChartData(this.chart, res, 1);
-    // })
-
     this.loadVisualzeData();
+  }
+
+  sendData(name: string) {
+    console.log('Calling send data');
+    this.restservice.readResults2(name).subscribe((data: any) => {
+      this.data = data;
+      console.log('received data', this.data)
+      console.log('\n data 01\n', data[0], '\n')
+      console.log('\n data 02\n', data[1], '\n')
+
+      const arr = data[0].split('\n');
+      const catArr = [], lengthArr = [];
+      arr.forEach(element => {
+        const data = element.split(' ');
+
+        catArr.push(data[0]);
+        lengthArr.push(data[data.length - 1]);
+      });
+      console.log(catArr);
+      console.log(lengthArr);
+
+      setTimeout(() => {
+        const labels = [];
+        for (let i = 0; i < lengthArr.length; i++) {
+          const label = catArr[i] + ' - ' + lengthArr[i];
+          labels.push(label);
+        }
+        this.doughnutChartLabels = labels;
+        this.barChartLabels = labels;
+        this.pieChartLabels = labels;
+        this.radarChartLabels = labels;
+        // this.barChartData = labels;
+      }, 2000);
+    })
+
   }
 
   loadVisualzeData() {
 
-    var file = this.FileholderService.getfile();
-    console.log(file);
-    this.restservice.readResults(file)
+    // //////////////////////////////////////////////////////////////////////////////////////////////
+
+    this.restservice.readResults()
       .subscribe
       (data => {
-        // alert(data)
         this.backendData = data;
-        // this.pieChartData = data;
-        // this.barChartLabels = this.backendData;
-        // this.barChartData = this.backendData;
-
-        // this.doughnutChartData = this.backendData;
-        // this.doughnutChartLabels = this.backendData;
-        var obj = JSON.parse(this.backendData);
-
-        console.log('Backend Data Json parse: ', obj.age, obj.sex);
-        // this.addData1('bar', obj.age);
-
-        // this.doughnutChartData = obj.age;
-        setTimeout(() => {
-
-          this.doughnutChartLabels = ['Sales Q1', 'Sales Q2', 'Sales Q3', 'Sales Q4', 'Sales Q5', 'Sales Q6'];
-          this.doughnutChartData = [65, 59, 80, 81, 56, 55, 40]
-        }, 0);
-        // console.log('Server Response: ', data);
+        // var obj = JSON.parse(this.backendData);
+        console.log('Backend Data Json parse: ', this.backendData[0]);
       },
         (error) => {
           console.log('No Data Found of Visualization' + error);

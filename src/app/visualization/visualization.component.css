@@ -5,6 +5,14 @@
     font-size: 24px;
 }
 
+.btn {
+    padding: 10px 20px;
+    background-color: black;
+    color: #f1f1f1;
+    border-radius: 0;
+    transition: .2s;
+}
+
 .navbar-icon-top .navbar-nav .nav-link>.fa>.badge {
     font-size: 0.75rem;
     position: absolute;

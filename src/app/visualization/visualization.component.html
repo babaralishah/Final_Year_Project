@@ -8,7 +8,10 @@
     <div class="col-md-5 col-sm-6">
         <h1 style="text-align:center;"><b>Visualizations</b></h1>
 
-        <button (click)="loadVisualzeData()" class="btn btn-primary">Visualize</button>
+        <button (click)="sendData(data)" class="btn btn-primary" *ngFor="let data of backendData">{{data}}</button>
+        <!-- <button (click)="sendData(backendData[1])" class="btn btn-primary">{{backendData[1]}}</button>
+        <button (click)="sendData(backendData[2])" class="btn btn-primary">{{backendData[2]}}</button>
+        <button (click)="sendData(backendData[3])" class="btn btn-primary">{{backendData[3]}}</button> -->
     </div>
     <div class="col-md-5 col-sm-6">
         <!-- Bar-chart --><br><br>

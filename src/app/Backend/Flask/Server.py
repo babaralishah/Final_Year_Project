@@ -1,5 +1,6 @@
 # Import Libraries :
-
+# Calculating the processing time
+import time
 from flask import Flask, request, jsonify
 import os
 from flask import Flask, jsonify, render_template
@@ -67,37 +68,70 @@ app.register_blueprint(test, url_prefix="/")
 # Defining the global variables
 X = 0
 y = 0
-data_frame = 0
+X_data = 0
+y_data = 0
+data_frame1 = 0
+
+# #########################################################################################################################
 
 
 @app.route('/')
 def index():
     return 'abcdef'
 
-# ##########################################################################################################################
+# #########################################################################################################################
 
 
 @app.route('/output1/', methods=['POST', 'GET'])
 @cross_origin(allow_headers=['http://localhost:4200'])
 def upload_file1():
-    if request.method == 'POST':
-        file = request.files['file']
-        file.save(secure_filename(file.filename))
-        print('File received at rest service: ' + file.filename)
-        # Data Preprocessing:
-        print('Calling the uplaod file function in the same file')
-        global data_frame
-        data_frame = pad.read_csv(file.filename)
-        print(data_frame)
-        print('\n\nX\n\n')
-        print(X)
-        print(y)
-        print('below we have the dataframe\n\n')
-        # return 'string'
-        df = data_frame.to_json()
-        return jsonify([df])
+    global data_frame1
 
-# #################################################################################################################################
+    columns = list(data_frame1.columns.values)
+    print('\nColumns\n')
+    # print(columns)
+    # X_data = data_frame1.iloc[:, :-1]
+    # X_data = X_data.to_json()
+    return jsonify(columns)
+
+
+# ##########################################################################################################################
+
+
+@app.route('/output2/', methods=['POST', 'GET'])
+@cross_origin(allow_headers=['http://localhost:4200'])
+def upload_file2():
+    # name = ' '
+    name = request.data
+    name = name.decode('utf-8')
+    # print()  # '1234'
+    print('Calling the uplaod file2: ')
+    print(name)
+    # num = 2
+    global data_frame1
+    print(data_frame1[name])
+    y_data = data_frame1.iloc[:, [-1]]
+    y_data = y_data.to_json()
+    abc = ' '
+    abc = data_frame1[name].value_counts()
+    print('\n\n\n')
+    print(abc)
+    print('\n\n\n')
+    a = "Hello"
+    # print(asd)
+    print('\nbefore\n')
+    print(type(abc))
+    # abc = abc.to_string()
+    abc = abc.to_string()
+    print('\nafter\n')
+    print(type(abc))
+    print(abc)
+    print('\n\n\n')
+    # return 'hey'
+    # return jsonify([y_data])
+    return jsonify(abc,a)
+
+# ###########################################################################################################################
 
 
 @app.route('/output/', methods=['POST', 'GET'])
@@ -109,17 +143,29 @@ def upload_file():
         file.save(secure_filename(file.filename))
         print('File received at rest service: ' + file.filename)
         # Data Preprocessing:
-        print('Calling the uplaod file function in the same file')
+        # print('Calling the uplaod file function in the same file')
         # upload_file1(file)
         # Reading Data file (csv) from web cache
-        global data_frame
+        # global data_frame1
+        # data_frame1 = pad.read_csv(file.filename)
         data_frame = pad.read_csv(file.filename)
 
         # Removing all columns with only one value, or have more than 50% missing values to work faster
         # data_frame=data_frame.dropna(axis=1)
 
         # Replace nan values with average of columns
-        # data_frame.fillna(data_frame.mean())
+
+        # Start calculating the time
+        start = time.time()
+        global data_frame1
+        data_frame1 = pad.read_csv(file.filename)
+        data_frame1.fillna(data_frame1.mean())
+        data_frame.fillna(data_frame.mean())
+
+        # Stops the watch
+        end = time.time()
+        print('\n\nPerformed nan replacement to  data_frame, and data_frame1 in time ',
+              end-start, '\n\n')
 
         from sklearn.preprocessing import OneHotEncoder, LabelEncoder
         # ohe = OneHotEncoder()
@@ -164,7 +210,7 @@ def upload_file():
             X_train, X_test, y_train, y_test = train_test_split(
                 X, y, test_size=0.0007, train_size=0.0003, random_state=0)
 
-        print(X_train.shape)
+        # print(X_train.shape)
         # k = X_train.columns()/2
 
         # Standard scaling of the dataset
@@ -186,7 +232,9 @@ def upload_file():
         # num_feats = 5
         #X_train = SelectKBest(chi2,k=num_feats).fit_transform(X_train, y_train)
         #X_test = SelectKBest(chi2, k=10).fit_transform(X_test, y_test)
-        print(X_train.shape)
+
+        # print('\n\n\nX_train\n\n')
+        # print(X_train.shape)
 
         # ML Models Building:
 
@@ -224,7 +272,7 @@ def upload_file():
         linear.fit(X_train, y_train)
 
         # Calculating the processing time
-        import time
+        # import time
 
         start = time.time()
 
@@ -234,7 +282,7 @@ def upload_file():
         # Stops the watch
         end = time.time()
         # Calculates the consumed time
-        print("\nExecution time of Linear regression training: ", end - start)
+        # print("\nExecution time of Linear regression training: ", end - start)
 
         # Start calculating the time
         start = time.time()
@@ -243,14 +291,14 @@ def upload_file():
         end = time.time()
 
         # Calculates the consumed time
-        print("\nExecution time of Logistic regression training: ", end - start)
+        # print("\nExecution time of Logistic regression training: ", end - start)
 
         start = time.time()
 
         # fit the model with data
         DT_clf.fit(X_train, y_train)
         end = time.time()
-        print("\nExecution time of Decision Tree training: ", end - start)
+        # print("\nExecution time of Decision Tree training: ", end - start)
 
         start = time.time()
 
@@ -261,12 +309,12 @@ def upload_file():
         end = time.time()
 
         # Calculates the consumed time
-        print("\nExecution time of Knn training: ", end - start)
+        # print("\nExecution time of Knn training: ", end - start)
 
         # fit the model with data
         svc_clf.fit(X_train, y_train.values.ravel())
         end = time.time()
-        print("\nExecution time of SVC training: ", end - start)
+        # print("\nExecution time of SVC training: ", end - start)
 
         start = time.time()
 
@@ -277,7 +325,7 @@ def upload_file():
         end = time.time()
 
         # Calculates the consumed time
-        print("\nExecution time of Naive Bayes training: ", end - start)
+        # print("\nExecution time of Naive Bayes training: ", end - start)
 
         start = time.time()
 
@@ -288,7 +336,7 @@ def upload_file():
         end = time.time()
 
         # Calculates the consumed time
-        print("\nExecution time of Random Forest training: ", end - start)
+        # print("\nExecution time of Random Forest training: ", end - start)
 
         import numpy as np
         import matplotlib.pyplot as plt
@@ -301,6 +349,19 @@ def upload_file():
         plt.ylabel("Distance")
         # Simple Plot
         plt.plot(x, y)
+        # plt.show()
+
+        # plotting histogram
+        plt.hist(data_frame['G3'], rwidth=0.9, alpha=0.3,
+                 color='blue', bins=15, edgecolor='red')
+
+        # x and y-axis labels
+        plt.xlabel('sex')
+        plt.ylabel('grade')
+
+        # plot title
+        plt.title('Inspecting price effect')
+        # plt.show()
 
         print("\n\nModel \t\t\t\t\t Test Score\t\t\t\t\tTrain Score")
 
@@ -411,45 +472,7 @@ def upload_file():
 
             ]
         }
-        print(results)
-        # return 'end of function'
         return jsonify([results])
-        # return ('returning string in output flask')
-
-        # Predict Support Vector Machine
-    #   #y_pred_svc = svc_clf.predict(X_test)
-
-        # index()
-
-    # if request.method == 'POST':
-    #   file = request.files['file']
-    #   file.save(secure_filename(file.filename))
-    #   print('File received at upload: ' + file.filename)
-
-# s = svc_clf.score(X_test, y_test)*100
-
-
-# @app.route('/output1/', methods=['POST', 'GET'])
-# @cross_origin(allow_headers=['http://localhost:4200'])
-# def upload_file1():
-#     #abc =''
-#     # d = index()
-#     # t = Template('$when, $who $action $what.')
-#     #s= t.substitute(when=abc, who='Rajesh', action='drinks', what ='Coffee')
-#     # print(data_frame)
-#     abc = 'hey there'
-#     results = {
-#         "data": [{
-#             "name": abc,
-#             "output": "19"
-#         },  {
-#             "name": "Decision tree",
-#             "output": "28"
-#         }
-#         ]
-#     }
-
-#     return jsonify([results])
 
 
 if __name__ == '__main__':
