@@ -2,47 +2,48 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
 <!------ Include the above in your HEAD tag ---------->
+<div class="container">
+    <div class="row">
+        <br><br>
+        <div class="col-md-5 col-sm-6">
+            <h1 style="text-align:center;"><b>Visualizations</b></h1>
 
-<div class="row">
-    <br><br>
-    <div class="col-md-5 col-sm-6">
-        <h1 style="text-align:center;"><b>Visualizations</b></h1>
-
-        <button (click)="sendData(data)" class="btn btn-primary" *ngFor="let data of backendData">{{data}}</button>
-        <!-- <button (click)="sendData(backendData[1])" class="btn btn-primary">{{backendData[1]}}</button>
+            <button (click)="sendData(data)" class="btn btn-primary" *ngFor="let data of backendData">{{data}}</button>
+            <!-- <button (click)="sendData(backendData[1])" class="btn btn-primary">{{backendData[1]}}</button>
         <button (click)="sendData(backendData[2])" class="btn btn-primary">{{backendData[2]}}</button>
         <button (click)="sendData(backendData[3])" class="btn btn-primary">{{backendData[3]}}</button> -->
-    </div>
-    <div class="col-md-5 col-sm-6">
-        <!-- Bar-chart --><br><br>
-        <h1><b>Bar Chart</b></h1><br><br>
-        <div style="display: block">
-            <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [legend]="barChartLegend" [chartType]="barChartType"></canvas>
         </div>
-    </div>
-
-    <div class="col-md-5 col-sm-6">
-        <!-- Doughnut chart --><br><br>
-        <h1><b>Doughnut Chart</b></h1><br><br>
-        <div style="display: block">
-            <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"></canvas>
+        <div class="col-md-5 col-sm-6">
+            <!-- Bar-chart --><br><br>
+            <h1><b>Bar Chart</b></h1><br><br>
+            <div style="display: block">
+                <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [legend]="barChartLegend" [chartType]="barChartType"></canvas>
+            </div>
         </div>
-    </div>
 
-
-    <div class="col-md-5 col-sm-6">
-        <!-- Pie chart --><br><br>
-        <h1><b>Pie Chart</b></h1><br><br>
-        <div style="display: block">
-            <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"></canvas>
+        <div class="col-md-5 col-sm-6">
+            <!-- Doughnut chart --><br><br>
+            <h1><b>Doughnut Chart</b></h1><br><br>
+            <div style="display: block">
+                <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"></canvas>
+            </div>
         </div>
-    </div>
 
-    <div class="col-md-5 col-sm-6">
-        <!-- Radar chart --><br><br>
-        <h1><b>Radar Chart</b></h1><br><br>
-        <div style="display: block">
-            <canvas baseChart [datasets]="radarChartData" [labels]="radarChartLabels" [chartType]="radarChartType"></canvas>
+
+        <div class="col-md-5 col-sm-6">
+            <!-- Pie chart --><br><br>
+            <h1><b>Pie Chart</b></h1><br><br>
+            <div style="display: block">
+                <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"></canvas>
+            </div>
+        </div>
+
+        <div class="col-md-5 col-sm-6">
+            <!-- Radar chart --><br><br>
+            <h1><b>Radar Chart</b></h1><br><br>
+            <div style="display: block">
+                <canvas baseChart [datasets]="radarChartData" [labels]="radarChartLabels" [chartType]="radarChartType"></canvas>
+            </div>
         </div>
     </div>
 </div>

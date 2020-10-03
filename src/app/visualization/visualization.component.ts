@@ -60,8 +60,8 @@ export class VisualizationComponent implements OnInit {
     this.restservice.readResults2(name).subscribe((data: any) => {
       this.data = data;
       console.log('received data', this.data)
-      console.log('\n data 01\n', data[0], '\n')
-      console.log('\n data 02\n', data[1], '\n')
+      // console.log('\n data 01\n', data[0], '\n')
+      // console.log('\n data 02\n', data[1], '\n')
 
       const arr = data[0].split('\n');
       const catArr = [], lengthArr = [];
@@ -80,11 +80,13 @@ export class VisualizationComponent implements OnInit {
           const label = catArr[i] + ' - ' + lengthArr[i];
           labels.push(label);
         }
+        console.log('\nlets assign the values\n')
         this.doughnutChartLabels = labels;
         this.barChartLabels = labels;
         this.pieChartLabels = labels;
         this.radarChartLabels = labels;
         // this.barChartData = labels;
+        console.log('\nDone\n');
       }, 2000);
     })
 

@@ -85,13 +85,9 @@ def index():
 @app.route('/output1/', methods=['POST', 'GET'])
 @cross_origin(allow_headers=['http://localhost:4200'])
 def upload_file1():
-    global data_frame1
+    global X
 
-    columns = list(data_frame1.columns.values)
-    print('\nColumns\n')
-    # print(columns)
-    # X_data = data_frame1.iloc[:, :-1]
-    # X_data = X_data.to_json()
+    columns = list(X.columns.values)
     return jsonify(columns)
 
 
@@ -101,35 +97,28 @@ def upload_file1():
 @app.route('/output2/', methods=['POST', 'GET'])
 @cross_origin(allow_headers=['http://localhost:4200'])
 def upload_file2():
-    # name = ' '
-    name = request.data
-    name = name.decode('utf-8')
-    # print()  # '1234'
+    col_name = request.data
+    col_name = col_name.decode('utf-8')
     print('Calling the uplaod file2: ')
-    print(name)
-    # num = 2
+    # print(col_name)
     global data_frame1
-    print(data_frame1[name])
+    # print(data_frame1[col_name])
     y_data = data_frame1.iloc[:, [-1]]
     y_data = y_data.to_json()
     abc = ' '
-    abc = data_frame1[name].value_counts()
-    print('\n\n\n')
-    print(abc)
-    print('\n\n\n')
+    abc = data_frame1[col_name].value_counts()
+    # print('\n\n\n')
+    # print(abc)
+    # print('\n\n\n')
     a = "Hello"
-    # print(asd)
-    print('\nbefore\n')
-    print(type(abc))
-    # abc = abc.to_string()
+    # print('\nbefore\n')
+    # print(type(abc))
     abc = abc.to_string()
-    print('\nafter\n')
-    print(type(abc))
-    print(abc)
-    print('\n\n\n')
-    # return 'hey'
-    # return jsonify([y_data])
-    return jsonify(abc,a)
+    # print('\nafter\n')
+    # print(type(abc))
+    # print(abc)
+    # print('\n\n\n')
+    return jsonify(abc, a)
 
 # ###########################################################################################################################
 
@@ -148,6 +137,7 @@ def upload_file():
         # Reading Data file (csv) from web cache
         # global data_frame1
         # data_frame1 = pad.read_csv(file.filename)
+        print('step-01')
         data_frame = pad.read_csv(file.filename)
 
         # Removing all columns with only one value, or have more than 50% missing values to work faster
@@ -157,11 +147,18 @@ def upload_file():
 
         # Start calculating the time
         start = time.time()
+        print('\nnans before removing\n')
+        nan = data_frame.isnull().sum().sum()
+        print(nan)
         global data_frame1
         data_frame1 = pad.read_csv(file.filename)
-        data_frame1.fillna(data_frame1.mean())
-        data_frame.fillna(data_frame.mean())
 
+        if nan != 0:
+            data_frame1 = data_frame1.fillna(data_frame1.mean())
+            data_frame = data_frame.fillna(data_frame.mean())
+
+        print('\nnans after removing\n')
+        print(data_frame.isnull().sum().sum())
         # Stops the watch
         end = time.time()
         print('\n\nPerformed nan replacement to  data_frame, and data_frame1 in time ',
@@ -337,31 +334,6 @@ def upload_file():
 
         # Calculates the consumed time
         # print("\nExecution time of Random Forest training: ", end - start)
-
-        import numpy as np
-        import matplotlib.pyplot as plt
-
-        x = np.arange(0, 10)
-        y = x ^ 2
-        # Labeling the Axes and Title
-        plt.title("Graph Drawing")
-        plt.xlabel("Time")
-        plt.ylabel("Distance")
-        # Simple Plot
-        plt.plot(x, y)
-        # plt.show()
-
-        # plotting histogram
-        plt.hist(data_frame['G3'], rwidth=0.9, alpha=0.3,
-                 color='blue', bins=15, edgecolor='red')
-
-        # x and y-axis labels
-        plt.xlabel('sex')
-        plt.ylabel('grade')
-
-        # plot title
-        plt.title('Inspecting price effect')
-        # plt.show()
 
         print("\n\nModel \t\t\t\t\t Test Score\t\t\t\t\tTrain Score")
 
