@@ -20,7 +20,7 @@ export class VisualizationComponent implements OnInit {
 
   data1 = [];
   ////////////////////////////////////////////////////
-  backendData: any
+  backendData: any;
   public doughnutChartLabels = ['S Q1', 'S Q2', 'S Q3', 'S Q4', 'S Q5', 'S Q6'];
   public doughnutChartData = [120, 150, 180, 90, 120, 150, 180, 90];
   public doughnutChartType = 'doughnut';
@@ -43,11 +43,11 @@ export class VisualizationComponent implements OnInit {
     { data: [90, 150, 200, 45], label: '2018' }
   ];
   public radarChartType = 'radar';
-  lastColumn: Object;
-  data: Object;
+  lastColumn: any;
+  data: any;
 
   constructor(
-    private FileholderService: FileholderService,
+    // private FileholderService: FileholderService,
     private restservice: RestService) { }
 
   ngOnInit(): void {
@@ -55,47 +55,8 @@ export class VisualizationComponent implements OnInit {
     this.loadVisualzeData();
   }
 
-  sendData(name: string) {
-    console.log('Calling send data');
-    this.restservice.readResults2(name).subscribe((data: any) => {
-      this.data = data;
-      console.log('received data', this.data)
-      // console.log('\n data 01\n', data[0], '\n')
-      // console.log('\n data 02\n', data[1], '\n')
-
-      const arr = data[0].split('\n');
-      const catArr = [], lengthArr = [];
-      arr.forEach(element => {
-        const data = element.split(' ');
-
-        catArr.push(data[0]);
-        lengthArr.push(data[data.length - 1]);
-      });
-      console.log(catArr);
-      console.log(lengthArr);
-
-      setTimeout(() => {
-        const labels = [];
-        for (let i = 0; i < lengthArr.length; i++) {
-          const label = catArr[i] + ' - ' + lengthArr[i];
-          labels.push(label);
-        }
-        console.log('\nlets assign the values\n')
-        this.doughnutChartLabels = labels;
-        this.barChartLabels = labels;
-        this.pieChartLabels = labels;
-        this.radarChartLabels = labels;
-        // this.barChartData = labels;
-        console.log('\nDone\n');
-      }, 2000);
-    })
-
-  }
-
+  // tslint:disable-next-line: typedef
   loadVisualzeData() {
-
-    // //////////////////////////////////////////////////////////////////////////////////////////////
-
     this.restservice.readResults()
       .subscribe
       (data => {
@@ -107,6 +68,47 @@ export class VisualizationComponent implements OnInit {
           console.log('No Data Found of Visualization' + error);
         }
       );
+
+  }
+
+  // tslint:disable-next-line: typedef
+  sendData(name: string) {
+    console.log('Calling send data');
+    this.restservice.readResults2(name).subscribe((data: any) => {
+      // this.data = data;
+      console.log('\nreceived data', data);
+      console.log('\ncol_categories data at [0]: ', data[0]);
+      console.log('\nparticualr_column data at [1]: ', data[1]);
+      console.log('\nX_data data at [2]: ', data[2]);
+      console.log('\ny_data data at [3]: ', data[3]);
+
+      const arr = data[0].split('\n');
+      // tslint:disable-next-line: one-variable-per-declaration
+      const catArr = [], lengthArr = [];
+      arr.forEach(element => {
+        const dataSplit = element.split(' ');
+
+        catArr.push(dataSplit[0]);
+        lengthArr.push(dataSplit[dataSplit.length - 1]);
+      });
+      console.log(catArr);
+      console.log(lengthArr);
+
+      setTimeout(() => {
+        const labels = [];
+        for (let i = 0; i < lengthArr.length; i++) {
+          const label = catArr[i] + ' - ' + lengthArr[i];
+          labels.push(label);
+        }
+        console.log('\nlets assign the values\n');
+        this.doughnutChartLabels = labels;
+        this.barChartLabels = labels;
+        this.pieChartLabels = labels;
+        this.radarChartLabels = labels;
+        // this.barChartData = labels;
+        console.log('\nDone\n');
+      }, 2000);
+    });
 
   }
 }
