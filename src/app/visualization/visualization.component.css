@@ -5,9 +5,26 @@
     font-size: 24px;
 }
 
+.chart {
+    /* max-width: 100%;
+    height: auto;
+    width: auto\9; */
+    width: 800px;
+    height: 500px;
+    margin-left: 280px;
+}
+
+.heading {
+    margin-left: 450px;
+}
+
+.btn2 {
+    width: 120px;
+}
+
 .btn {
-    padding: 10px 20px;
-    background-color: black;
+    padding: 5px 12px;
+    background-color: teal;
     color: #f1f1f1;
     border-radius: 0;
     transition: .2s;

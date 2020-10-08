@@ -14,19 +14,18 @@ export class RestService {
   backendAddress1 = 'http://127.0.0.1:5000/output1/';
   backendAddress2 = 'http://127.0.0.1:5000/output2/';
 
+  // tslint:disable-next-line: typedef
   readResults() {
-    // const formData: FormData = new FormData();
-    // formData.append('file', file, file.name);
-    // console.log('File Name: ', file.name);
-    // return this.http.post(this.backendAddress1, formData); 
-    return this.http.get(this.backendAddress1); 
+    return this.http.get(this.backendAddress1);
   }
 
-  readResults2(name:string) {
-    console.log(name)
-    return this.http.post(this.backendAddress2, name); 
+  // tslint:disable-next-line: typedef
+  readResults2(name1) {
+    console.log(name1);
+    return this.http.post(this.backendAddress2, name1);
   }
 
+  // tslint:disable-next-line: typedef
   parseTable(fileToUpload: File) {
     const formData: FormData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);

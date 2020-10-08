@@ -20,21 +20,15 @@ export class AuthenticationService {
 
     return this.httpClient.post(`${this.url}/users/signup`, user).pipe(
       catchError(this.handleError)
-    )
+    );
   }
   /////////// Function to Login the already existed user /////////////
   public login(user: any): Observable<any> {
     console.log('Hello', user);
     return this.httpClient.post(`${this.url}/users/login`, user);
-    // .subscribe((data: any) => {
-    //   localStorage.setItem('access_token', data.token)
-    //   this.getUserProfile(data._id).subscribe((data) => {
-    //     this.currentUser = data;
-    //     this.router.navigate(['users/profile/' + data.msg._id]);
-    //   })
-    // })
   }
   ///////// Error Handling /////////////////
+  // tslint:disable-next-line: typedef
   handleError(error: HttpErrorResponse) {
     let msg = '';
     if (error.error instanceof ErrorEvent) {

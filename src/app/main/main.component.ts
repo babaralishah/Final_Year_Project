@@ -10,16 +10,18 @@ import { FileholderService } from '../Services/fileholder.service';
 })
 export class MainComponent implements OnInit {
 
+  // tslint:disable-next-line: variable-name
   general_search: string;
   data: any;
 
   fileToUpload: File = null;
-  results: Object;
+  results: any;
   constructor(
     public restservice: RestService,
+    // tslint:disable-next-line: no-shadowed-variable
     private FileholderService: FileholderService
   ) { }
-  headers1 = ['Algorithm', 'Efficiency'];
+  headers1 = ['Algorithm', 'Efficiency_Test', 'Efficiency_Train'];
   flag = false;
   stringifiedData: any;
   parsedJson: any;
@@ -30,13 +32,16 @@ export class MainComponent implements OnInit {
   receivedFile: File; //  = null;
   todaydate: Date;
 
+  // tslint:disable-next-line: typedef
   ngOnInit() {
   }
+  // tslint:disable-next-line: typedef
   handleFileInput(files: FileList) {
     this.fileToUpload = files.item(0);
     console.log('I am \'handleFileInput Function \': \"File dragged but not uploaded yet\"');
   }
 
+  // tslint:disable-next-line: typedef
   async uploadFile() {
 
     this.FileholderService.setfile(this.fileToUpload);
@@ -49,7 +54,7 @@ export class MainComponent implements OnInit {
       // this.router.navigateByUrl('/Visualization');
     });
 
-    //Calling service for firebase
+    // Calling service for firebase
 
     // const obs = await this.UploadfirebaseService.uploadProfileImg(
     //   {
@@ -63,6 +68,6 @@ export class MainComponent implements OnInit {
     //   }
     // );
 
-    // Calling the service to pass the data file between other components such as visualization component 
+    // Calling the service to pass the data file between other components such as visualization component
   }
 }

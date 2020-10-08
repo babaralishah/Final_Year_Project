@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { AuthenticationService } from "../authentication.service";
+import { AuthenticationService } from '../authentication.service';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -12,12 +12,13 @@ export class SignupComponent implements OnInit {
   registerForm: FormGroup;
 
   constructor(public formBuilder: FormBuilder,
-    public authService: AuthenticationService,
-    public router: Router) { }
+              public authService: AuthenticationService,
+              public router: Router) { }
 
   ngOnInit(): void {
     this.initialize();
   }
+  // tslint:disable-next-line: typedef
   initialize() {
     this.registerForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -25,12 +26,13 @@ export class SignupComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
+  // tslint:disable-next-line: typedef
   registerUser() {
     this.submitted = true;
 
     // stop here if form is invalid
     if (this.registerForm.invalid) {
-      console.log('Erroneous')
+      console.log('Erroneous');
       return;
     }
     this.authService.register(this.registerForm.value).subscribe((data) => {
@@ -49,8 +51,9 @@ export class SignupComponent implements OnInit {
       else {
         alert(msg);
       }
-    })
+    });
   }
   // convenience getter for easy access to form fields
+  // tslint:disable-next-line: typedef
   get f() { return this.registerForm.controls; }
 }
