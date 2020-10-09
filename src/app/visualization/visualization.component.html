@@ -10,7 +10,7 @@
             <div class="col-sm-6 col-md-6 pull-left">
                 <h2>Select predictor</h2>
                 <div class="col-md-6 btn2">
-                    <button (click)="sendData(data)" class="btn btn-primary" *ngFor="let data of backendData">{{data}}</button>
+                    <button (click)="setName1(data)" class="btn btn-primary" *ngFor="let data of backendData">{{data}}</button>
                 </div>
             </div>
             <br>
@@ -18,17 +18,17 @@
             <div class="col-sm-6 col-md-6 pull-right">
                 <h2>Select response</h2>
                 <div class="col-md-6 btn2">
-                    <button (click)="sendData(data)" class="btn btn-primary" *ngFor="let data of backendData">{{data}}</button>
+                    <button (click)="setName2(data)" class="btn btn-primary" *ngFor="let data of backendData">{{data}}</button>
                 </div>
             </div><br><br>
-            <input type="submit" value="Visualize">
+            <input type="submit" (click)="sendData()" value="Visualize">
         </form>
     </div>
     <br>
     <br>
     <div class="row heading">
         <!-- <div class=""> -->
-        <h4>Choose a vsual chart</h4>
+        <h4>Choose a visual</h4>
         <!-- </div> -->
         <button class="btn btn-primary" (click)="checkChart('bar')">Bar Chart</button>
         <button class="btn btn-primary" (click)="checkChart('doughnut')">Doughnut Chart</button>

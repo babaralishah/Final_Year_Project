@@ -20,9 +20,11 @@ export class RestService {
   }
 
   // tslint:disable-next-line: typedef
-  readResults2(name1) {
-    console.log(name1);
-    return this.http.post(this.backendAddress2, name1);
+  readResults2(credentials: object | any) {
+    const formData: FormData = new FormData();
+    formData.append('name1', credentials.name1);
+    formData.append('name2', credentials.name2);
+    return this.http.post(this.backendAddress2, formData);
   }
 
   // tslint:disable-next-line: typedef

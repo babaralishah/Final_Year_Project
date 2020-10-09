@@ -6,13 +6,15 @@
     background-color: #38baa2;
     color: white;
     border: 1px solid transparent;
+    border-radius: 25px;
 }
 
 div {
     font-family: 'Segoe UI', SegoeUI, 'Segoe WP', Tahoma, Arial, sans-serif;
-    color: white;
-    background-color: #3c3c41;
-    font-size: 23px;
+    color: black;
+    /* background-color: #3c3c41; */
+    background-color: #fff;
+    font-size: 19px;
 }
 
 #results {
@@ -27,15 +29,12 @@ div {
 #results td,
 #results th {
     border: 1px solid rgb(27, 167, 160);
-    padding: 8px;
-}
-
-#results tr:nth-child(even) {
-    background-color: #32383e;
+    padding: 14px;
 }
 
 #results tr:hover {
-    background-color: #072e38;
+    background-color: #00cba5;
+    color: white;
 }
 
 #results th {
