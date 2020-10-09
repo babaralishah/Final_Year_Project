@@ -81,9 +81,9 @@ export class VisualizationComponent implements OnInit {
     console.log('Calling send data');
     // console.log(this.name1, this.name2);
     this.restservice.readResults2({name1: this.name1, name2: this.name2}).subscribe((data: any) => {
-      console.log('data 0: ', data[0]);
-      console.log('data 1: ', data[1]);
-      console.log('data 2: ', data[2]);
+      // console.log('data 0: ', data[0]);
+      // console.log('data 1: ', data[1]);
+      // console.log('data 2: ', data[2]);
       const object1 = JSON.parse(data[1]);
       const object2 = JSON.parse(data[2]);
       const arr1 = [];
